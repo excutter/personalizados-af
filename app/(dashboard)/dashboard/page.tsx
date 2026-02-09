@@ -11,8 +11,6 @@ import {
 import UserItem from "@/components/user-item";
 import { formatDate, getDayPeriod } from "@/lib/date-utils";
 import {
-  CalendarSync,
-  CalendarX,
   Clock9,
   GlassWater,
   MessageCircle,
@@ -114,7 +112,7 @@ const ExpireSoonCard: React.FC = () => {
             key={i}
             actions={
               <>
-                <ExpireDate date={new Date()} status="expiring_soon" />
+                <ExpireDate date={new Date()} />
                 <Button
                   variant="secondary"
                   size="icon-sm"

@@ -1,5 +1,8 @@
-const formatDate = ({ date }: { date: Date }): string => {
-    return date.toLocaleDateString('es-MX', { year: "numeric", month: "short", day: "numeric" })
+import { format as dateFormat } from "date-fns"
+import { es } from "react-day-picker/locale/es"
+
+const formatDate = ({ date, format = "PPP" }: { date: Date, format?: string }): string => {
+    return dateFormat(date, format, { locale: es })
 }
 
 const getDayPeriod = ({ date }: { date: Date }): string => {
