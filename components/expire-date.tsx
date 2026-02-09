@@ -18,9 +18,12 @@ const ExpireDate = ({ date }: { date: Date }) => {
   };
   const status = getStatus();
   const statusClasses: { [key in Status]: string } = {
-    active: "bg-green-100 text-green-800 border-green-500",
-    expired: "bg-red-100 text-red-900 border-red-500",
-    expiring_soon: "bg-yellow-100 text-yellow-800 border-yellow-500",
+    active:
+      "bg-green-100 text-green-800 border-green-500 dark:bg-green-200 dark:text-green-900 dark:border-green-600",
+    expired:
+      "bg-red-100 text-red-900 border-red-500 dark:bg-red-200 dark:text-red-900 dark:border-red-600",
+    expiring_soon:
+      "bg-yellow-100 text-yellow-800 border-yellow-500 dark:bg-yellow-200 dark:text-yellow-900 dark:border-yellow-600",
   };
 
   return (

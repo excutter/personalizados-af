@@ -28,7 +28,7 @@ const DashboardPage = () => {
       <h1 className="text-2xl font-bold dark:text-white">
         {getDayPeriod({ date: currentDate })}, Angel
       </h1>
-      <h2 className="text-xl text-gray-500 font-semibold">
+      <h2 className="text-xl text-gray-500 dark:text-gray-400 font-semibold">
         {formatDate({ date: currentDate })}
       </h2>
       <div className="columns-2 md:columns-2 sm:columns-1 gap-4 mt-6">
@@ -43,7 +43,7 @@ const InThisMomentCard: React.FC = () => {
   return (
     <Card className="py-0 gap-3">
       <CardHeader className="px-0">
-        <CardTitle className="py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100">
+        <CardTitle className="py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100 dark:bg-card dark:text-gray-100">
           En este momento
         </CardTitle>
         <CardDescription className="px-4">
@@ -54,12 +54,12 @@ const InThisMomentCard: React.FC = () => {
             <Button
               variant="outline"
               size="icon-sm"
-              className="rounded-full text-black"
+              className="rounded-full text-black dark:text-white"
             >
               <Plus strokeWidth={3} />
             </Button>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 dark:text-gray-300">
             <p className="flex gap-1 items-center">
               <Clock9 size={14} strokeWidth={2.5} />
               6:00 - 7:00
@@ -81,12 +81,12 @@ const InThisMomentCard: React.FC = () => {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="rounded-full bg-blue-100 hover:bg-blue-300"
+                className="rounded-full bg-blue-100 hover:bg-blue-300 dark:bg-blue-300 dark:hover:bg-blue-400"
               >
                 <GlassWater
                   size={12}
                   strokeWidth={2.5}
-                  className="text-blue-600"
+                  className="text-blue-600 dark:text-blue-800"
                 />
               </Button>
             }
@@ -101,7 +101,7 @@ const ExpireSoonCard: React.FC = () => {
   return (
     <Card className="py-0 gap-0">
       <CardHeader className="px-0">
-        <CardTitle className="flex justify-between items-center py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100">
+        <CardTitle className="flex justify-between items-center py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100 dark:bg-card dark:text-gray-100">
           <span>Membresías vencidas/por vencer</span>
           <Badge className="bg-gray-200 text-black rounded-sm">3</Badge>
         </CardTitle>
@@ -114,29 +114,33 @@ const ExpireSoonCard: React.FC = () => {
               <>
                 <ExpireDate date={new Date()} />
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   size="icon-sm"
-                  className="rounded-full"
+                  className="rounded-full text-black dark:text-white"
                 >
                   <MessageCircle size={12} strokeWidth={2.5} />
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   size="icon-sm"
-                  className="rounded-full hover:bg-green-100"
+                  className="rounded-full hover:bg-green-100 dark:hover:bg-green-100"
                 >
                   <RefreshCcw
                     size={12}
                     strokeWidth={2.5}
-                    className="text-green-500"
+                    className="text-green-500 dark:text-green-600"
                   />
                 </Button>
                 <Button
-                  variant="secondary"
+                  variant="outline"
                   size="icon-sm"
-                  className="rounded-full hover:bg-red-100"
+                  className="rounded-full hover:bg-red-100 dark:hover:bg-red-100"
                 >
-                  <X size={12} strokeWidth={2.5} className="text-red-500" />
+                  <X
+                    size={12}
+                    strokeWidth={2.5}
+                    className="text-red-500 dark:text-red-600"
+                  />
                 </Button>
               </>
             }

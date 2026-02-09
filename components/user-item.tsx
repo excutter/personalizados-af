@@ -13,7 +13,7 @@ const UserItem: React.FC<UserItemProps> = async ({
   actions,
 }) => {
   return (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-b-gray-200 last:border-0">
+    <div className="flex items-center gap-2 px-4 py-2 border-b border-b-gray-200 last:border-0 dark:border-b-gray-800">
       <div className="flex justify-center items-center size-8 rounded-full bg-gray-100">
         <Avatar>
           <AvatarImage src={avatarUrl} alt={name} />
@@ -22,7 +22,7 @@ const UserItem: React.FC<UserItemProps> = async ({
           </AvatarFallback>
         </Avatar>
       </div>
-      <p className="text-sm text-black">{name}</p>
+      <p className="text-sm text-black dark:text-white">{name}</p>
       {actions && (
         <div className="flex items-center gap-2 ml-auto">{actions}</div>
       )}

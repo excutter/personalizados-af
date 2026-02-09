@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div>
       <SidebarProvider>
         <AppSidebar />
-        <main className="bg-white dark:bg-gray-800 w-full px-8 py-10 relative">
+        <main className="bg-white dark:bg-black w-full px-8 py-10 relative">
           <SidebarTrigger className="absolute top-0 left-0 cursor-pointer" />
           {children}
         </main>
