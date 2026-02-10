@@ -31,7 +31,7 @@ const DashboardPage = () => {
       <h2 className="text-xl text-gray-500 dark:text-gray-400 font-semibold">
         {formatDate({ date: currentDate })}
       </h2>
-      <div className="columns-2 md:columns-2 sm:columns-1 gap-4 mt-6">
+      <div className="grid grid-cols-2 gap-4 mt-6 max-[1020px]:grid-cols-1">
         <InThisMomentCard />
         <ExpireSoonCard />
       </div>
@@ -41,7 +41,7 @@ const DashboardPage = () => {
 
 const InThisMomentCard: React.FC = () => {
   return (
-    <Card className="py-0 gap-3">
+    <Card className="@container py-0 gap-3">
       <CardHeader className="px-0">
         <CardTitle className="py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100 dark:bg-card dark:text-gray-100">
           En este momento
@@ -59,7 +59,7 @@ const InThisMomentCard: React.FC = () => {
               <Plus strokeWidth={3} />
             </Button>
           </div>
-          <div className="flex items-center gap-4 dark:text-gray-300">
+          <div className="flex items-center @max-sm:flex-wrap gap-4 dark:text-gray-300">
             <p className="flex gap-1 items-center">
               <Clock9 size={14} strokeWidth={2.5} />
               6:00 - 7:00

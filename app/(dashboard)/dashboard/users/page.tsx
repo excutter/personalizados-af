@@ -16,7 +16,7 @@ const UsersPage = () => {
   return (
     <div className="w-full">
       <h1 className="text-2xl font-bold dark:text-white">Alumnos</h1>
-      <div className="flex flex-col gap-5 mt-5">
+      <div className="@container flex flex-col gap-5 mt-5">
         <Tabs
           value={selectedTab}
           onValueChange={(value) => setSelectedTab(value)}
@@ -25,11 +25,11 @@ const UsersPage = () => {
             className="w-full justify-start gap-2"
             style={{ height: "38px" }}
           >
-            <TabsTrigger value="all" className="grow-0">
+            <TabsTrigger value="all" className="grow-0 @max-sm:flex-1">
               Todos
               <Badge variant="default">3</Badge>
             </TabsTrigger>
-            <TabsTrigger value="waitlist" className="grow-0">
+            <TabsTrigger value="waitlist" className="grow-0 @max-sm:flex-1">
               Lista de Espera
               <Badge variant="default">10</Badge>
             </TabsTrigger>
@@ -38,6 +38,7 @@ const UsersPage = () => {
         <UserTable
           actions={
             <Button
+              className="@max-sm:w-full"
               variant="default"
               aria-label="Agregar Alumno"
               onClick={() => setIsUserFormOpen(true)}

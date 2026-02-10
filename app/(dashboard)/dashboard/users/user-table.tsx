@@ -1,5 +1,6 @@
 import DataTable, { DataTableColumnHeader } from "@/components/data-table";
 import ExpireDate from "@/components/expire-date";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { ColumnDef } from "@tanstack/react-table";
 
 type UserTableProps = {
@@ -71,6 +72,8 @@ const columns: ColumnDef<User>[] = [
 ];
 
 const UserTable: React.FC<UserTableProps> = ({ actions }) => {
+  const isMobile = useIsMobile();
+  console.log("isMobile:", isMobile);
   return (
     <DataTable
       columns={columns}

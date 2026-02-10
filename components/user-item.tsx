@@ -14,14 +14,12 @@ const UserItem: React.FC<UserItemProps> = async ({
 }) => {
   return (
     <div className="flex items-center gap-2 px-4 py-2 border-b border-b-gray-200 last:border-0 dark:border-b-gray-800">
-      <div className="flex justify-center items-center size-8 rounded-full bg-gray-100">
-        <Avatar>
-          <AvatarImage src={avatarUrl} alt={name} />
-          <AvatarFallback>
-            <User size={16} strokeWidth={2.5} />
-          </AvatarFallback>
-        </Avatar>
-      </div>
+      <Avatar>
+        <AvatarImage src={avatarUrl} alt={name} />
+        <AvatarFallback>
+          <User size={16} strokeWidth={2.5} />
+        </AvatarFallback>
+      </Avatar>
       <p className="text-sm text-black dark:text-white">{name}</p>
       {actions && (
         <div className="flex items-center gap-2 ml-auto">{actions}</div>

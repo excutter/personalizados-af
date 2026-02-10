@@ -82,8 +82,8 @@ const DataTable = <TData, TValue>({
 
   return (
     <div className="flex flex-col gap-3.5">
-      <div className="flex items-center">
-        <ButtonGroup className="">
+      <div className="flex items-center @max-sm:flex-col @max-sm:gap-3">
+        <ButtonGroup className="@max-sm:w-full @max-sm:order-2">
           <Button variant="outline" aria-label="Buscar">
             <SearchIcon />
           </Button>
@@ -95,7 +95,7 @@ const DataTable = <TData, TValue>({
             onChange={onSearchChange}
           />
         </ButtonGroup>
-        {actions && <div className="ml-auto">{actions}</div>}
+        {actions && <div className="ml-auto @max-sm:w-full">{actions}</div>}
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>

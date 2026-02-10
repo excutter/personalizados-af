@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/sheet";
 import { User } from "lucide-react";
 import { formatDate } from "@/lib/date-utils";
+import { Textarea } from "@/components/ui/textarea";
 
 type UserDrawerProps = {
   isOpen: boolean;
@@ -47,6 +48,7 @@ type User = {
   lastName: string;
   group: string;
   enrollmentDate?: Date;
+  notes?: string;
 };
 
 const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
@@ -56,6 +58,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
     lastName: "",
     group: "",
     enrollmentDate: undefined,
+    notes: "",
   });
 
   useEffect(() => {
@@ -75,22 +78,27 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
     setUser((prev) => (prev ? { ...prev, enrollmentDate: date } : prev));
   };
 
+  const onNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.target;
+    setUser((prev) => (prev ? { ...prev, notes: value } : prev));
+  };
+
   const submitIsDisabled =
     user.name && user.lastName && user.group && user.enrollmentDate;
 
   return (
     <Sheet disablePointerDismissal open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent>
-        <SheetHeader>
+        <SheetHeader className="pb-0">
           <SheetTitle>Agregar Alumno</SheetTitle>
           <SheetDescription>
             Completa los campos para agregar un nuevo alumno al sistema.
           </SheetDescription>
         </SheetHeader>
-        <div className="w-15 h-15 mx-4 flex justify-center items-center bg-gray-100 rounded-full dark:bg-gray-900">
-          <User strokeWidth={2.5} />
-        </div>
-        <form className="px-4 h-full flex flex-col">
+        <form
+          className="px-4 h-full flex flex-col overflow-y-auto"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Nombre(s)</FieldLabel>
@@ -164,6 +172,14 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
                   />
                 </PopoverContent>
               </Popover>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="notes">Notas</FieldLabel>
+              <Textarea
+                id="notes"
+                value={user.notes}
+                onChange={onNotesChange}
+              />
             </Field>
           </FieldGroup>
           <SheetFooter className="px-0">
