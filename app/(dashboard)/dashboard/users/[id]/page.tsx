@@ -15,6 +15,10 @@ import { ArrowUpRightIcon, UserX } from "lucide-react";
 import { users } from "@/types/User";
 import UserPageContent from "./user-content";
 
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
+
 const UserPage: React.FC<{ params: Promise<{ id: string }> }> = async ({
   params,
 }) => {

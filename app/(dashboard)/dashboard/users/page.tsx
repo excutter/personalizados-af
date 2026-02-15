@@ -7,12 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 import UserTable from "./user-table";
-import UserDrawer from "./user-drawer";
 import { Page, PageHeader } from "@/components/page";
+import Link from "next/link";
 
 const UsersPage = () => {
   const [selectedTab, setSelectedTab] = useState<"all" | "waitlist">("all");
-  const [createUser, setCreateUser] = useState<boolean>(false);
 
   return (
     <Page id="users-page">
@@ -48,13 +47,17 @@ const UsersPage = () => {
               className="@max-sm/users-page:w-full"
               variant="default"
               aria-label="Agregar Alumno"
-              onClick={() => setCreateUser(true)}
             >
-              <Plus /> Agregar Alumno
+              <Link
+                href="/dashboard/users/new"
+                className="inline-flex items-center gap-1"
+              >
+                <Plus strokeWidth={2.5} />
+                Agregar Alumno
+              </Link>
             </Button>
           }
         />
-        <UserDrawer isOpen={createUser} onOpenChange={setCreateUser} />
       </div>
     </Page>
   );
