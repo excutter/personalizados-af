@@ -8,14 +8,15 @@ import { Plus } from "lucide-react";
 
 import UserTable from "./user-table";
 import UserDrawer from "./user-drawer";
+import { Page, PageHeader } from "@/components/page";
 
 const UsersPage = () => {
   const [selectedTab, setSelectedTab] = useState<"all" | "waitlist">("all");
-  const [isUserFormOpen, setIsUserFormOpen] = useState(false);
+  const [createUser, setCreateUser] = useState<boolean>(false);
 
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold dark:text-white">Alumnos</h1>
+    <Page id="users-page">
+      <PageHeader>Alumnos</PageHeader>
       <div className="@container flex flex-col gap-5 mt-5">
         <Tabs
           value={selectedTab}
@@ -25,11 +26,17 @@ const UsersPage = () => {
             className="w-full justify-start gap-2"
             style={{ height: "38px" }}
           >
-            <TabsTrigger value="all" className="grow-0 @max-sm:flex-1">
+            <TabsTrigger
+              value="all"
+              className="grow-0 @max-sm/users-page:flex-1 @max-md/users-page:flex-1"
+            >
               Todos
               <Badge variant="default">3</Badge>
             </TabsTrigger>
-            <TabsTrigger value="waitlist" className="grow-0 @max-sm:flex-1">
+            <TabsTrigger
+              value="waitlist"
+              className="grow-0 @max-sm/users-page:flex-1 @max-md/users-page:flex-1"
+            >
               Lista de Espera
               <Badge variant="default">10</Badge>
             </TabsTrigger>
@@ -38,18 +45,18 @@ const UsersPage = () => {
         <UserTable
           actions={
             <Button
-              className="@max-sm:w-full"
+              className="@max-sm/users-page:w-full"
               variant="default"
               aria-label="Agregar Alumno"
-              onClick={() => setIsUserFormOpen(true)}
+              onClick={() => setCreateUser(true)}
             >
               <Plus /> Agregar Alumno
             </Button>
           }
         />
-        <UserDrawer isOpen={isUserFormOpen} onOpenChange={setIsUserFormOpen} />
+        <UserDrawer isOpen={createUser} onOpenChange={setCreateUser} />
       </div>
-    </div>
+    </Page>
   );
 };
 

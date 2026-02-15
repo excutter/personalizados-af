@@ -19,30 +19,26 @@ import {
   TableRow,
 } from "./ui/table";
 import { cn } from "@/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import {
-  ArrowDown,
-  ArrowUp,
-  ChevronsUpDown,
-  EyeOff,
-  Plus,
-  SearchIcon,
-} from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronsUpDown, SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { ButtonGroup } from "./ui/button-group";
 import { Input } from "./ui/input";
 import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: keyof TData & string;
+  initialSort?: SortingState;
+  tableContainerClassName?: string;
   actions?: React.ReactNode;
   mobileCell?: (data: TData) => React.ReactNode;
 };
@@ -57,10 +53,12 @@ const DataTable = <TData, TValue>({
   columns,
   data,
   searchKey,
+  initialSort,
+  tableContainerClassName,
   actions,
   mobileCell,
 }: DataTableProps<TData, TValue>) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>(initialSort || []);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const isMobile = useIsMobile();
 
@@ -84,10 +82,17 @@ const DataTable = <TData, TValue>({
     table.getColumn(searchKey)?.setFilterValue(event.target.value);
   };
 
+  const onSortChange = (value: string | null) => {
+    if (!value) return;
+    const column = table.getColumn(value);
+    if (!column) return;
+    column.toggleSorting();
+  };
+
   return (
     <div className="flex flex-col gap-3.5">
       <div className="flex items-center @max-sm:flex-col @max-sm:gap-3 @max-sm:sticky @max-sm:top-5 @max-sm:bg-background @max-sm:z-10">
-        <ButtonGroup className="@max-sm:w-full @max-sm:order-2">
+        <ButtonGroup className="@max-sm:w-full @max-sm:order-3">
           <Button variant="outline" aria-label="Buscar">
             <SearchIcon />
           </Button>
@@ -99,14 +104,46 @@ const DataTable = <TData, TValue>({
             onChange={onSearchChange}
           />
         </ButtonGroup>
-        {actions && <div className="ml-auto @max-sm:w-full">{actions}</div>}
+        {isMobile && mobileCell && (
+          <div className="w-full flex justify-between @max-sm:order-2">
+            <Select
+              items={columns.map((col: any) => ({
+                label: col.footer as string,
+                value: col.accessorKey as string,
+              }))}
+              onValueChange={onSortChange}
+            >
+              <SelectTrigger className="w-full" aria-invalid={false}>
+                <SelectValue placeholder="Ordenar por" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {columns.map((header: any) => {
+                    const id = header.accessorKey;
+                    if (id === "actions") return null;
+                    return (
+                      <SelectItem key={id} value={id}>
+                        {header.footer}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {actions && (
+          <div className="ml-auto @max-sm:w-full @max-sm:order-1">
+            {actions}
+          </div>
+        )}
       </div>
       {isMobile && mobileCell ? (
         table.getRowModel().rows?.map((row) => {
           return mobileCell(row.original);
         })
       ) : (
-        <div className="overflow-hidden rounded-md border">
+        <div className={cn("rounded-md border", tableContainerClassName)}>
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => {
@@ -151,7 +188,7 @@ const DataTable = <TData, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    Sin resultados.
                   </TableCell>
                 </TableRow>
               )}
@@ -168,41 +205,26 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const onSort = () => {
+    column.toggleSorting(column.getIsSorted() === "asc");
+  };
+
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>;
   }
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className="flex items-center hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5 data-[state=open]:bg-accent -ml-3 h-8">
-            <span>{title}</span>
-            {column.getIsSorted() === "desc" ? (
-              <ArrowDown />
-            ) : column.getIsSorted() === "asc" ? (
-              <ArrowUp />
-            ) : (
-              <ChevronsUpDown />
-            )}
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <ArrowUp />
-            Asc
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <ArrowDown />
-            Desc
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => column.clearSorting()}>
-            <ChevronsUpDown />
-            Cancelar
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <span>{title}</span>
+      <Button variant="ghost" size="icon" className="size-6" onClick={onSort}>
+        {column.getIsSorted() === "desc" ? (
+          <ArrowDown />
+        ) : column.getIsSorted() === "asc" ? (
+          <ArrowUp />
+        ) : (
+          <ChevronsUpDown />
+        )}
+      </Button>
     </div>
   );
 }

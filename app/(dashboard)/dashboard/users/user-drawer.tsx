@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -28,9 +28,9 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { User } from "lucide-react";
 import { formatDate } from "@/lib/date-utils";
 import { Textarea } from "@/components/ui/textarea";
+import { User } from "@/types/User";
 
 type UserDrawerProps = {
   isOpen: boolean;
@@ -43,27 +43,19 @@ const groups = [
   { label: "Grupo C", value: "grupo_c" },
 ];
 
-type User = {
-  name: string;
-  lastName: string;
-  group: string;
-  enrollmentDate?: Date;
-  notes?: string;
+type NewUser = Omit<User, "id" | "water" | "enrollmentDate"> & {
+  enrollmentDate: Date | undefined;
 };
 
 const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
-  const [timeZone, setTimeZone] = useState<string | undefined>(undefined);
-  const [user, setUser] = useState<User>({
+  const newUserTemplate: NewUser = {
     name: "",
     lastName: "",
     group: "",
     enrollmentDate: undefined,
     notes: "",
-  });
-
-  useEffect(() => {
-    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
-  }, []);
+  };
+  const [user, setUser] = useState<NewUser>(newUserTemplate);
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -87,8 +79,8 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
     user.name && user.lastName && user.group && user.enrollmentDate;
 
   return (
-    <Sheet disablePointerDismissal open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent>
+    <Sheet open={isOpen} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full!">
         <SheetHeader className="pb-0">
           <SheetTitle>Agregar Alumno</SheetTitle>
           <SheetDescription>
@@ -106,6 +98,7 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
                 id="name"
                 required
                 placeholder="Angel"
+                value={user.name}
                 onChange={onInputChange}
               />
             </Field>
@@ -115,17 +108,20 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
                 id="lastName"
                 required
                 placeholder="Flores"
+                value={user.lastName}
                 onChange={onInputChange}
               />
             </Field>
             <FieldGroup>
               <Field data-invalid={false}>
                 <FieldLabel htmlFor="checkout-exp-month-ts6">Grupo</FieldLabel>
-                <Select required items={groups} onValueChange={onGroupChange}>
-                  <SelectTrigger
-                    id="checkout-7j9-exp-year-f59"
-                    aria-invalid={false}
-                  >
+                <Select
+                  required
+                  value={user.group}
+                  items={groups}
+                  onValueChange={onGroupChange}
+                >
+                  <SelectTrigger aria-invalid={false}>
                     <SelectValue placeholder="Selecciona un grupo" />
                   </SelectTrigger>
                   <SelectContent>
@@ -167,7 +163,6 @@ const UserDrawer: React.FC<UserDrawerProps> = ({ isOpen, onOpenChange }) => {
                     mode="single"
                     captionLayout="dropdown"
                     selected={user.enrollmentDate}
-                    timeZone={timeZone}
                     onSelect={onDateChange}
                   />
                 </PopoverContent>

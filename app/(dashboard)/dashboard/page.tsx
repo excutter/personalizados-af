@@ -1,4 +1,5 @@
 import ExpireDate from "@/components/expire-date";
+import { Page, PageHeader } from "@/components/page";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,10 +25,8 @@ import {
 const DashboardPage = () => {
   const currentDate = new Date();
   return (
-    <div className="w-full">
-      <h1 className="text-2xl font-bold dark:text-white">
-        {getDayPeriod({ date: currentDate })}, Angel
-      </h1>
+    <Page id="dashboard-page">
+      <PageHeader>{getDayPeriod({ date: currentDate })}, Angel</PageHeader>
       <h2 className="text-xl text-gray-500 dark:text-gray-400 font-semibold">
         {formatDate({ date: currentDate })}
       </h2>
@@ -35,7 +34,7 @@ const DashboardPage = () => {
         <InThisMomentCard />
         <ExpireSoonCard />
       </div>
-    </div>
+    </Page>
   );
 };
 
@@ -43,7 +42,7 @@ const InThisMomentCard: React.FC = () => {
   return (
     <Card className="@container py-0 gap-3">
       <CardHeader className="px-0">
-        <CardTitle className="py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100 dark:bg-card dark:text-gray-100">
+        <CardTitle className="py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-neutral-50 dark:bg-card dark:text-gray-100">
           En este momento
         </CardTitle>
         <CardDescription className="px-4">
@@ -101,7 +100,7 @@ const ExpireSoonCard: React.FC = () => {
   return (
     <Card className="py-0 gap-0">
       <CardHeader className="px-0">
-        <CardTitle className="flex justify-between items-center py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-gray-100 dark:bg-card dark:text-gray-100">
+        <CardTitle className="flex justify-between items-center py-2 px-4 text-xs uppercase font-medium text-gray-500 bg-neutral-50 dark:bg-card dark:text-gray-100">
           <span>Membresías vencidas/por vencer</span>
           <Badge className="bg-gray-200 text-black rounded-sm">3</Badge>
         </CardTitle>
