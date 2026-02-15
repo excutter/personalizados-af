@@ -91,8 +91,8 @@ const DataTable = <TData, TValue>({
 
   return (
     <div className="flex flex-col gap-3.5">
-      <div className="flex items-center @max-sm:flex-col @max-sm:gap-3 @max-sm:sticky @max-sm:top-5 @max-sm:bg-background @max-sm:z-10">
-        <ButtonGroup className="@max-sm:w-full @max-sm:order-3">
+      <div className="flex items-center @max-lg:flex-col @max-lg:gap-3 @max-lg:sticky @max-lg:top-5 @max-lg:bg-background @max-lg:z-10">
+        <ButtonGroup className="@max-lg:w-full @max-lg:order-3">
           <Button variant="outline" aria-label="Buscar">
             <SearchIcon />
           </Button>
@@ -105,7 +105,7 @@ const DataTable = <TData, TValue>({
           />
         </ButtonGroup>
         {isMobile && mobileCell && (
-          <div className="w-full flex justify-between @max-sm:order-2">
+          <div className="w-full flex justify-between @max-lg:order-2">
             <Select
               items={columns.map((col: any) => ({
                 label: col.footer as string,
@@ -133,7 +133,7 @@ const DataTable = <TData, TValue>({
           </div>
         )}
         {actions && (
-          <div className="ml-auto @max-sm:w-full @max-sm:order-1">
+          <div className="ml-auto @max-lg:w-full @max-lg:order-1">
             {actions}
           </div>
         )}

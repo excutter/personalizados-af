@@ -56,9 +56,9 @@ const Alert: React.FC<AlertProps> = ({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
+          <AlertDialogCancel variant="outline">Cancelar</AlertDialogCancel>
           <AlertDialogCancel variant={variant} onClick={onConfirm}>
-            Confirm
+            Confirmar
           </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>

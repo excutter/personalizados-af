@@ -31,6 +31,7 @@ import { formatDate } from "@/lib/date-utils";
 import { User } from "@/types/User";
 import { Pencil, Save, Trash2 } from "lucide-react";
 import TransactionsTable from "./transactions-table";
+import Alert from "@/components/alert";
 
 type UserPageProps = {
   user?: User;
@@ -95,6 +96,12 @@ const UserPageContent: React.FC<UserPageProps> = ({
   const onNotesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
     setUser((prev) => (prev ? { ...prev, notes: value } : prev));
+  };
+
+  const onDeleteUser = (user?: User) => {
+    // Lógica para manejar la eliminación de un usuario
+    if (!user) return;
+    console.log("Deleted user:", user);
   };
 
   const submitIsDisabled =
@@ -226,10 +233,18 @@ const UserPageContent: React.FC<UserPageProps> = ({
             className={`mt-auto ${isNew ? "justify-end" : "justify-between"}`}
           >
             {!isNew && (
-              <Button variant="destructive">
-                <Trash2 />
-                Eliminar
-              </Button>
+              <Alert
+                variant="destructive"
+                title="Eliminar alumno"
+                description={`¿Estás seguro de que quieres eliminar a ${user.name} ${user.lastName}?`}
+                onConfirm={() => onDeleteUser(fetchedUser)}
+                trigger={
+                  <Button variant="destructive">
+                    <Trash2 size={14} strokeWidth={2.5} />
+                    Eliminar
+                  </Button>
+                }
+              />
             )}
             <Button type="submit" disabled={!submitIsDisabled || !canEdit}>
               <Save />

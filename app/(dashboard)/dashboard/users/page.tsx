@@ -25,17 +25,11 @@ const UsersPage = () => {
             className="w-full justify-start gap-2"
             style={{ height: "38px" }}
           >
-            <TabsTrigger
-              value="all"
-              className="grow-0 @max-sm/users-page:flex-1 @max-md/users-page:flex-1"
-            >
+            <TabsTrigger value="all" className="grow-0 @max-lg:flex-1">
               Todos
               <Badge variant="default">3</Badge>
             </TabsTrigger>
-            <TabsTrigger
-              value="waitlist"
-              className="grow-0 @max-sm/users-page:flex-1 @max-md/users-page:flex-1"
-            >
+            <TabsTrigger value="waitlist" className="grow-0 @max-lg:flex-1">
               Lista de Espera
               <Badge variant="default">10</Badge>
             </TabsTrigger>
@@ -44,7 +38,7 @@ const UsersPage = () => {
         <UserTable
           actions={
             <Button
-              className="@max-sm/users-page:w-full"
+              className="@max-lg:w-full"
               variant="default"
               aria-label="Agregar Alumno"
             >
